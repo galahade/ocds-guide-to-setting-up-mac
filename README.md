@@ -6,7 +6,7 @@
 
 ## Table of Contents
 
-1. [OS X](#1-os-x)
+1. [macOS](#1-macos)
 
    - [功能键](#功能键)
    - [全键盘控制](#全键盘控制)
@@ -29,7 +29,6 @@
    - [Homebrew Cask](#homebrew-cask)
    - [iTerm2](#iterm2)
    - [Oh My Zsh](#oh-my-zsh)
-   - [stow](#stow)
    - [Git 常用别名](#git-常用别名)
    - [Scroll Reverser](#scroll-reverser)
    - [ShiftIt](#shiftit)
@@ -41,6 +40,7 @@
    - [SourceTree](#sourcetree)
    - [CheatSheet](#cheatsheet)
    - [Alfred](#alfred)
+   - [Stow](#stow)
 
 3. [开发工具](#3-开发工具)
 
@@ -51,6 +51,7 @@
    - [IntelliJ IDEA](#intellij-idea)
    - [rbenv](#rbenv)
    - [Ruby 常用别名](#ruby-常用别名)
+   - [Node 版本管理](#node-版本管理)
 
 一直想写这么一篇文章，把我从同事那里学到的经验分享出来。市面上有很多类似的文章，写得都非常好，让我受益匪浅。不过我还是有一些自己总结出来的经验想要分享。
 
@@ -84,7 +85,7 @@
 
 PS：虽然本文名为“强迫症”，但其实并不是[真正意义上的强迫症](https://zh.wikipedia.org/wiki/强迫症)，真正意义上的强迫症是一种会对患者的日常生活产生负面影响的疾病。
 
-## 1. OS X
+## 1. macOS
 
 本节介绍操作系统本身的一些设置。
 
@@ -120,7 +121,7 @@ PS：虽然本文名为“强迫症”，但其实并不是[真正意义上的�
 
 ### Spotlight 快捷键
 
-中文版 OS X 的 Spotlight 的快捷键是`⌃Space`。这个快捷键有一些问题：
+中文版 macOS 的 Spotlight 的快捷键是`⌃Space`。这个快捷键有一些问题：
 
 - JetBrains 的 IDE，比如 IntelliJ IDEA、WebStorm 等都使用`⌃Space`作为自动完成这个最常用功能的快捷键。我不建议更改 IDE 的快捷键，而建议更改 Spotlight 的快捷键。
 - 对于没有添加中文输入法的 Mac 来说，Spotlight 的快捷键是`⌘Space`。英语国家的人都是这样的。所以我建议把 Spotlight 的快捷键设置为`⌘Space`，跟他们一致。
@@ -136,7 +137,7 @@ PS：虽然本文名为“强迫症”，但其实并不是[真正意义上的�
 - [Mac keyboard shortcts](https://support.apple.com/kb/HT201236)
 
   苹果官方文档。当你在写代码，怎么通过快捷键让光标转移到行首、行尾、向上翻页或者将光标移左移一个词？都在这篇文档里。
-  
+
 - [Mac keyboard shortcuts for accessibility features](https://support.apple.com/kb/HT204434)
 
   苹果官方文档。回车触发蓝底按钮，空格触发蓝边按钮，都出自这里。
@@ -149,7 +150,7 @@ PS：虽然本文名为“强迫症”，但其实并不是[真正意义上的�
 
 ### 语音
 
-OS X 自带了语音功能，可以用`say`命令让 Mac 开口说话：
+macOS 自带了语音功能，可以用`say`命令让 Mac 开口说话：
 
 ```sh
 say hello
@@ -165,7 +166,7 @@ brew update && brew upgrade && brew cleanup ; say mission complete
 
 ### 词典
 
-OS X 自带了词典（Dictionary）。你几乎可以在任何应用中通过三指轻拍触摸板来现实对应单词的释义。
+macOS 自带了词典（Dictionary）。你几乎可以在任何应用中通过三指轻拍触摸板来现实对应单词的释义。
 
 也可以打开 Dictionary 应用来查找单词。
 
@@ -190,6 +191,20 @@ OS X 自带了词典（Dictionary）。你几乎可以在任何应用中通过�
 默认情况下 Dock 被一堆系统自带的应用占据着，而其中大部分我都很少使用，当我打开几个常用应用后，Dock 上会有很多图标，每个图标都会被挤得很小。所以我会把所有 Dock 上固定的图标都删掉，这样一来 Dock 上只有我打开的应用。
 
 PS：Finder 图标是删不掉的。
+
+除了一个一个删除图标，也可以通过这个命令来隐藏所有的固定图标：
+
+```sh
+defaults write com.apple.dock static-only -boolean true; killall Dock
+```
+
+恢复也非常简单：
+
+```sh
+defaults delete com.apple.dock static-only; killall Dock
+```
+
+PS：使用这个方法的话，Dock 上的`Downloads`也会被隐藏掉。
 
 ### 重置 Launchpad 上图标位置[OCD]
 
@@ -219,7 +234,7 @@ hdiutil create -type SPARSE -fs 'Case-sensitive Journaled HFS+' -size 100g -voln
 
 ### Keychain Access
 
-钥匙串访问（Keychain Access）是一个 OS X 应用程序，对我来说它最大的功能就是查看已经保存的各种账号和密码，包括 Wi-Fi 密码。
+钥匙串访问（Keychain Access）是一个 macOS 应用程序，对我来说它最大的功能就是查看已经保存的各种账号和密码，包括 Wi-Fi 密码。
 
 ## 2. 常用工具
 
@@ -227,7 +242,7 @@ hdiutil create -type SPARSE -fs 'Case-sensitive Journaled HFS+' -size 100g -voln
 
 ### [Homebrew](http://brew.sh)
 
-包管理工具，官方称之为`The missing package manager for OS X`。
+包管理工具，官方称之为`The missing package manager for macOS`。
 
 安装步骤见官网。
 
@@ -241,9 +256,9 @@ PS：安装 brew 的时候会自动下载和安装 Apple 的 Command Line Tools�
 
 brew 的替代品有 [MacPorts](https://www.macports.org/)，现在基本没人用它。
 
-### [Homebrew Cask](http://caskroom.io)
+### [Homebrew Cask](https://caskroom.github.io)
 
-brew-cask 允许你使用命令行安装 OS X 应用。比如你可以这样安装 Chrome：`brew cask install google-chrome`。还有 Evernote、Skype、Sublime Text、VirtualBox 等都可以用 brew-cask 安装。
+brew-cask 允许你使用命令行安装 macOS 应用。比如你可以这样安装 Chrome：`brew cask install google-chrome`。还有 Evernote、Skype、Sublime Text、VirtualBox 等都可以用 brew-cask 安装。
 
 brew-cask 是社区驱动的，如果你发现 brew-cask 上的应用不是最新版本，或者缺少你某个应用，你可以自己提交 pull request。
 
@@ -251,7 +266,7 @@ brew-cask 是社区驱动的，如果你发现 brew-cask 上的应用不是最�
 
 应用也可以通过 App Store 安装，而且有些应用只能通过 App Store 安装，比如 Xcode 等一些 Apple 的应用。App Store 没有对应的命令行工具，还需要 Apple ID。倒是更新起来很方便。
 
-几乎所有常用的应用都可以通过 brew-cask 安装，而且是从应用的官网上下载，所以你要安装新的应用时，建议用 brew-cask 安装。如果你不知道应用在 brew-cask 中的 ID，可以先用`brew cask search`命令搜索。
+几乎所有常用的应用都可以通过 brew-cask 安装，而且是从应用的官网上下载，所以你要安装新的应用时，建议用 brew-cask 安装。如果你不知道应用在 brew-cask 中的 ID，可以先用`brew search`命令搜索。
 
 ### [iTerm2](https://www.iterm2.com/)
 
@@ -295,21 +310,11 @@ Oh My Zsh 使用了 Z shell（zsh），一个和 Bash 相似的 Shell，而非 B
 cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
 ```
 
+> [2016年6月17号的一次提交](https://github.com/robbyrussell/oh-my-zsh/commit/551abfcbb48a0c001eadef80abc3276af4e9ad26)后，`zshrc.zsh-template`就不再修改`$PATH`了。请找到`# export PATH=$HOME/bin:/usr/local/bin:$PATH`这一行，把前面的`#`去掉。
+
 Oh My Zsh 还有很多[有价值的插件](https://github.com/robbyrussell/oh-my-zsh/wiki/Plugins-Overview)。
 
-替代品有 [Oh My Fish](https://github.com/oh-my-fish/oh-my-fish)，使用了 [Fishshell](http://fishshell.com/) 作为基础。
-
-### [Stow](http://www.gnu.org/software/stow/)
-
-GNU stow 是管理符号链接（symlink）的一个小公举。主要用于 symlink 你的 [dotfiles](http://dotfiles.github.io/) 如 emacs，git，fish/zsh 的配置文件。安装只需要
-
-```
-brew install stow
-```
-
-安装了 stow 之后，我们可以开始 symlink 一些 dotfiles 了。完整使用 stow 和 dotfiles 的流程可以参考 <https://github.com/jcouyang/dotfiles>
-
-当你的 dotfiles 都妥妥的 symlink 到 `~/dotfiles` 后，push 到 github 上就再也不怕换电脑了。
+替代品有 [Oh My Fish](https://github.com/oh-my-fish/oh-my-fish)。基于 [Fishshell](http://fishshell.com/) 。
 
 ### Git 常用别名
 
@@ -335,15 +340,13 @@ gst   | `git status`
 gup   | `git pull --rebase`
 gwip  | `git add -A; git rm $(git ls-files --deleted) 2> /dev/null; git commit -m "--wip--"`
 
-
 完整列表请参考：<https://github.com/robbyrussell/oh-my-zsh/wiki/Plugin:git>
-
 
 ### Scroll Reverser
 
 当你在浏览一个很长的网页时，你看完了当前显示的内容，想要看后续的内容，你可以在 Trackpad 上双指上滑，或者鼠标滚轮向上滚动。这是被称作“自然”的滚动方向。
 
-然而在 Windows 里鼠标滚动的行为是相反的：鼠标滚轮向下滚动才会让浏览器显示后续的内容，向上滚动会达到页面的顶部。你可以在 OS X 的系统偏好设置里修改（选择`System Preferences` > `Trackpad`，在`Scroll & Zoom`标签页中不选中`Scroll direction: natural`），但是这样会同时改变鼠标滚轮的方向和 Trackpad 的方向。
+然而在 Windows 里鼠标滚动的行为是相反的：鼠标滚轮向下滚动才会让浏览器显示后续的内容，向上滚动会达到页面的顶部。你可以在 macOS 的系统偏好设置里修改（选择`System Preferences` > `Trackpad`，在`Scroll & Zoom`标签页中不选中`Scroll direction: natural`），但是这样会同时改变鼠标滚轮的方向和 Trackpad 的方向。
 
 要想只改变鼠标滚轮的方向，而保持 Trackpad 依旧是“自然”的，我们需要 Scroll Reverser：
 
@@ -355,7 +358,7 @@ PS：这货会让三指点击失效
 
 ### ShiftIt
 
-原生 OS X 下只能手动调整窗口大小，所以我们需要窗口管理工具。我用过很多窗口管理工具，可惜大部分工具都存在快捷键冲突的问题（对我来说主要是 IntelliJ IDEA）。ShiftIt 是少见的没有冲突的窗口管理工具：
+原生 macOS 下只能手动调整窗口大小，所以我们需要窗口管理工具。我用过很多窗口管理工具，可惜大部分工具都存在快捷键冲突的问题（对我来说主要是 IntelliJ IDEA）。ShiftIt 是少见的没有冲突的窗口管理工具：
 
 ```sh
 brew cask install shiftit
@@ -469,30 +472,42 @@ Mac 用户不用鼠标键盘的必备神器，配合大量 Workflows，习惯之
 brew cask install alfred
 ```
 
+### [Stow](http://www.gnu.org/software/stow/)
+
+GNU Stow 是管理符号链接（symlink）的一个小公举。主要用于 symlink 你的 [dotfiles](http://dotfiles.github.io/) 如 Emacs、Git、fish shell/Zsh 的配置文件。安装只需要
+
+```
+brew install stow
+```
+
+安装了 stow 之后，我们可以开始 symlink 一些 dotfiles 了。完整使用 stow 和 dotfiles 的流程可以参考 <https://github.com/jcouyang/dotfiles>
+
+当你的 dotfiles 都妥妥的 symlink 到 `~/dotfiles` 后，push 到 github 上就再也不怕换电脑了。
+
 ## 3. 开发工具
 
 ### Java
 
-现在 OS X 都不会自带 JDK 了，所以进行 Java 开发的话，需要下载 JDK。在 brew-cask 之前，我们需要从 <https://developer.apple.com/downloads/> 或者 Oracle 网站上下载。还有更麻烦的－－卸载 JDK 和升级 JDK。
+macOS 都不会自带 JDK 了，所以进行 Java 开发的话，需要下载 JDK。在 brew-cask 之前，我们需要从 <https://developer.apple.com/downloads/> 或者 Oracle 网站上下载。还有更麻烦的－－卸载 JDK 和升级 JDK。
 
 JDK 安装文件是 pkg 格式，卸载和`.app`不一样，且没有自动卸载方式。
 
-而 brew-cask 提供了自动安装和卸载功能，能够自动从官网上下载并安装 JDK 8。
+而 brew-cask 提供了自动安装和卸载功能，能够自动从官网上下载并安装最新的 JDK。
 
 ```sh
 brew cask install java
 ```
 
-如果你需要安装 JDK 7 或者 JDK 6，可以使用`homebrew-cask-versions`：
+如果你需要安装 JDK 11 或者 JDK 6，可以使用 [homebrew-cask-versions](https://github.com/Homebrew/homebrew-cask-versions)：
 
 ```sh
-brew tap caskroom/versions
-brew cask install java6
+brew tap homebrew/cask-versions
+brew cask install java11
 ```
 
-在 OS X 上，你可以同时安装多个版本的 JDK。你可以通过命令`/usr/libexec/java_home -V`来查看安装了哪几个 JDK。
+在 macOS 上，你可以同时安装多个版本的 JDK。你可以通过命令`/usr/libexec/java_home -V`来查看安装了哪几个 JDK。
 
-那问题来了，当你运行`java`或者 Java 程序时使用的是哪个 JDK 呢？在 OS X 下，`java`也就是`/usr/bin/java`在默认情况下指向的是已经安装的最新版本。但是你可以设置环境变量`JAVA_HOME`来更改其指向：
+那问题来了，当你运行`java`或者 Java 程序时使用的是哪个 JDK 呢？在 macOS 下，`java`也就是`/usr/bin/java`在默认情况下指向的是已经安装的最新版本。但是你可以设置环境变量`JAVA_HOME`来更改其指向：
 
 ```sh
 $ java -version
@@ -507,6 +522,8 @@ Java HotSpot(TM) 64-Bit Server VM (build 20.65-b04-466.1, mixed mode)
 
 其中`JAVA_HOME=/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home`可以用`` JAVA_HOME=`/usr/libexec/java_home -v 1.6` ``这种更加通用的方式代替。
 
+需要 JDK 8/9？很遗憾，由于一些原因（[Java8 not working anymore](https://github.com/Homebrew/homebrew-cask-versions/issues/7253)），brew-cask 不再提供 Oracle JDK 这些版本的安装。不过你可以尝试 [AdoptOpenJDK](https://github.com/AdoptOpenJDK/homebrew-openjdk)，或者从 [Oracle](https://www.oracle.com) 官网手工下载安装。
+
 ### [jEnv](https://github.com/gcuisinier/jenv)
 
 也可以使用 jEnv 来管理不同版本的 JDK，这个工具跟 [rbenv](#rbenv) 类似，通过当前目录下的`.java-version`来决定使用哪个 JDK。jEnv 也可以用 brew 安装。不过要使用 jEnv 要有几个问题：
@@ -514,7 +531,7 @@ Java HotSpot(TM) 64-Bit Server VM (build 20.65-b04-466.1, mixed mode)
 - 需要手动把`eval "$(jenv init -)"`加入 profile，没有 Oh My Zsh 插件。这点是我非常反感的。
 
   可以把`eval "$(jenv init -)"`加入`~/.zlogin`，这样可以避免修改`~/.zshrc`。
-- 需要手动添加 JDK，不会自动采集系统 JDK。跟 Ruby 不同，OS X 已经提供`/usr/libexec/java_home`工具来管理安装的 JDK。
+- 需要手动添加 JDK，不会自动采集系统 JDK。跟 Ruby 不同，macOS 已经提供`/usr/libexec/java_home`工具来管理安装的 JDK。
 - 需要 `jenv rehash`。这个是跟 rbenv 学的。
 
 所以我建议不要使用 jEnv。
@@ -562,10 +579,10 @@ brew cask install intellij-idea
 brew cask install intellij-idea-ce
 ```
 
-IntelliJ IDEA 有几套内建的快捷键方案（Keymap）。其中适用于 OS X 的有`Mac OS X`和`Mac OS X 10.5+`两种。区别是:
+IntelliJ IDEA 有几套内建的快捷键方案（Keymap）。其中适用于 macOS 的有`Mac OS X`和`Mac OS X 10.5+`两种。区别是:
 
 - `Mac OS X`方案和其他平台上的快捷键类似，
-- 而`Mac OS X 10.5+`更加符合 OS X 常用的快捷键。
+- 而`Mac OS X 10.5+`更加符合 macOS 常用的快捷键。
 
 一个团队使用不同的快捷键会严重影响效率。可以用`View | Quick Switch Scheme`（`⌃ Back Quote`）快速切换 Keymap。
 
@@ -605,9 +622,40 @@ Z shell 对于`[`和`]`符号有特殊的处理，所以在运行`rake task[para
 plugins=(git z sublime history rbenv bundler rake)
 ```
 
+### Node 版本管理
+
+Node 的版本管理工具有很多，常用的会有以下几个：
+
+* [nodenv](https://github.com/nodenv/nodenv)
+
+  该工具是一个类似 rbenv 的工具，命令和其完全一样，安装和配置也一样。
+
+  ```
+  brew install nodenv
+  ```
+
+  你需要手动添加以下配置到`~/.zshrc`或者`~/.zprofile`文件里。
+
+  ```sh
+  export PATH="$HOME/.nodenv/bin:$PATH"
+  eval "$(nodenv init -)"
+  ```
+
+* [nvm](https://github.com/creationix/nvm)
+
+  该工具是一个类似 RVM 的工具，命令安装方式也基本一样，可以参考官方文档。
+
+* [n](https://github.com/tj/n)
+
+  一个简单的工具，安装方式类似 nvm，无需额外配置。具体参考官方文档。
+
+目前根据 GitHub Stars，这三个管理工具的排名依次是 nvm、n、nodenv。但是个人建议采用 nodenv，原因同 rbenv，尤其已经在使用 rbenv 的伙伴们会觉得 nodenv 更顺手 :smile: 。
+
+
 ## 参考资料
 
 - [Hacker's Guide to Setting up Your Mac](http://lapwinglabs.com/blog/hacker-guide-to-setting-up-your-mac)
 - [Setting up a new (OS X) development machine](https://mattstauffer.co/blog/setting-up-a-new-os-x-development-machine-part-1-core-files-and-custom-shell)
-- [高效 MacBook 工作环境配置](http://www.xialeizhou.com/?p=71)
+- [高效 MacBook 工作环境配置](http://www.xialeizhou.com/?p=71)（已失效）
 - [程序员如何优雅地使用 Mac？](http://www.zhihu.com/question/20873070)
+- [装点你的 Dock：外观篇](http://sspai.com/33493)

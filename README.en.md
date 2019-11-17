@@ -5,7 +5,7 @@
 *Translated from [强迫症的 Mac 设置指南](https://github.com/macdao/ocds-guide-to-setting-up-mac#强迫症的-mac-设置指南), thanks to author: QiXi from Thoughtworks China - fff*
 
 ## Table of Contents
-  * [1. OS X](#1-os-x)
+  * [1. macOS](#1-macos)
     * [Function Keys](#function-keys)
     * [Keyboard Only Control](#keyboard-only-control)
     * [Others](#others)
@@ -21,7 +21,6 @@
     * [Homebrew Cask](#homebrew-cask)
     * [iTerm2](#iterm2)
     * [Oh My Zsh](#oh-my-zsh)
-    * [Stow](#stow)
     * [Git Alias](#git-alias)
     * [ShiftIt](#shiftit)
     * [Sublime Text 2](#sublime-text-2)
@@ -32,10 +31,12 @@
     * [SourceTree](#sourcetree)
     * [CheatSheet](#cheatsheet)
     * [Alfred](#alfred)
+    * [Stow](#stow)
   * [3. Tools for developers](#3-tools-for-developers)
     * [Java](#java)
     * [rbenv](#rbenv)
     * [Ruby Daily Alias](#ruby-daily-alias)
+    * [Node Version Manager](#node-version-manager)
   * [References](#references)
 
 I was always thinking about writing this article, to share all the experiences I've learnt from other colleagues. Though there are already some really good books, from which I've learnt a lot also. But I still want to share my own experiences.
@@ -48,15 +49,15 @@ Several points of efficient Mac environment in my opinion:
 
 - Automate
 
-  Take a example, there are several steps to install an application manually: 
-  1. Open your browser, 
+  Take a example, there are several steps to install an application manually:
+  1. Open your browser,
   2. Search by the application name,
   3. Open the official site for the applicaiton,
   4. Find the download link,
   5. Downloading,
   6. Install it,
   7. Some post steps.
-  
+
   But with automatic tools, you only required to do:
   1. Open terminal,
   2. Type in commands,
@@ -84,9 +85,9 @@ Several points of efficient Mac environment in my opinion:
 
 
 
-## 1. OS X
+## 1. macOS
 
-Things related with OS X settings.
+Things related with macOS settings.
 
 ### Function Keys
 
@@ -123,7 +124,7 @@ Reduce using of Mouse and Trackpad may increase your efficiency.
 - [Mac keyboard shortcts](https://support.apple.com/kb/HT201236)
 
   Apple official documents. Like how to move cursor between lines, words and so on.
-  
+
 - [Mac keyboard shortcuts for accessibility features](https://support.apple.com/kb/HT204434)
 
   Apple official documents. The selection of blue button part is from this.
@@ -136,7 +137,7 @@ Goto `System Preferences` > `Trackpad`，check `Tap to click` in `Point & Click`
 
 ### Voice
 
-OS X can speak by：
+macOS can speak by：
 
 ```sh
 say hello
@@ -148,7 +149,7 @@ Combine it with other bash commands using `&&` or `;` like this:
 brew update && brew upgrade && brew cleanup ; say mission complete
 ```
 
-Also you can let it speak almost anywhere by selecting one word and press `⌥+Esc`(Alt/Option+Esc). Before that you need goto `System Preferences` > `Dictation & Speech`, check `Speak selected text when the key is pressed` in `Text to Speech` tab. 
+Also you can let it speak almost anywhere by selecting one word and press `⌥+Esc`(Alt/Option+Esc). Before that you need goto `System Preferences` > `Dictation & Speech`, check `Speak selected text when the key is pressed` in `Text to Speech` tab.
 
 *Some lines are missing here. As not helping a lot - fff*
 
@@ -168,9 +169,24 @@ Howto: goto `System Preferences` > `Keyboard`, click `Modifier Keys...` in `Keyb
 
 *本条目对于强迫症适用。It's for OCD(obsessive-compulsive disorder)*
 
-There are some default icons on the docker, I hardly use most of them. And after opening several daily applications, the docker comes so noisy, and the icons turn to really small. So I remove all the default icons on the docker, to make space for runing applications.
+There are several icons on the Dock by default, I rarely use most of them. And after opening several daily applications, the Dock comes so noisy, and the icons turn to really small. So I remove all the static icons on the Dock, to make space for runing applications.
 
 *Finder cannot be removed.*
+
+This command can easily hide all static Dock icons instead of removing them one by one:
+
+```sh
+defaults write com.apple.dock static-only -boolean true; killall Dock
+```
+
+It's easy to recovery:
+
+```sh
+defaults delete com.apple.dock static-only; killall Dock
+```
+
+*The `Downloads`Folder on the Dock will be hidden too*
+
 
 ### Reset the order of icons on Launchpad[OCD]
 
@@ -182,7 +198,7 @@ defaults write com.apple.dock ResetLaunchPad -bool true; killall Dock
 
 ### Keychain Access
 
-Keychain Access is a Mac OS X application. It can be used to find saved accounts and passwords including Wi-Fi password.
+Keychain Access is a macOS application. It can be used to find saved accounts and passwords including Wi-Fi password.
 
 *Some lines are missing here. As not helping a lot - fff*
 
@@ -192,7 +208,7 @@ Some routine software, and not necessarily related to development.
 
 ### [Homebrew](http://brew.sh)
 
-Package management, official description: "The missing package manager for OS X".
+Package management, official description: "The missing package manager for macOS".
 
 Go to official site for installation steps.
 
@@ -206,37 +222,35 @@ PS: install brew will download and install Apple Command Line Tools automaticall
 
 *Some lines are missing here. As not helping a lot - fff*
 
-### [Homebrew Cask](http://caskroom.io)
+### [Homebrew Cask](https://caskroom.github.io/)
 
-brew-cask helps you to install OS X Applications. Like to install Chrome：`brew cask install google-chrome`. Also Evernote, Skype, Sublime Text, VirtualBox, Java7 ...
+brew-cask helps you to install macOS Applications. Like to install Chrome：`brew cask install google-chrome`. Also Evernote, Skype, Sublime Text, VirtualBox, Java7 ...
 
 brew-cask is driven by community, you may raise a pull request when you found any missing or outdated application.
 
-Installation:
-
-```sh
-brew install caskroom/cask/brew-cask
-```
+You can find the installation method on offical website.
 
 You would like to search if you not sure if some application is already in cask.
+
 ```sh
-brew cask search java7
+brew search java
 ```
 
 *Some lines are missing here. As not helping a lot - fff*
 
 ### [iTerm2](https://www.iterm2.com/)
 
-iTerm2 is the most widely used terminal tool, considered as the replacement of Terminal. It provides [a group of practical features](https://www.iterm2.com/features.html), including `Split Panes`. Its default black background makes me throw away OS X' inbuilt Terminal application without any hesitation.
+iTerm2 is the most widely used terminal tool, considered as the replacement of Terminal. It provides [a group of practical features](https://www.iterm2.com/features.html), including `Split Panes`. Its default black background makes me throw away macOS' inbuilt Terminal application without any hesitation.
 
 Installation:
 
 ```sh
 brew cask install iterm2
 ```
+
 Thanks to brew-cask ~
 
-In iTerm2, except the commond shortcuts like `^E`(ctrl+E)(find more [here](#Others)). And after some configuration you can have more shortcuts like `⌥B`(alt+B), `⌥F`(alt+F). 
+In iTerm2, except the commond shortcuts like `^E`(ctrl+E)(find more [here](#Others)). And after some configuration you can have more shortcuts like `⌥B`(alt+B), `⌥F`(alt+F).
 HowTo: go to `Preferences` > `Profiles` > `Keys`, change the option of `Left option (⌥) key acts as` and `Right option (⌥) key acts as` to `+ESC`.
 
 When you open new window/tab, by default you're at user home directory, and need input commands to go somewhere else. If you want to open new window/tab in previous directory, you can set it like this:
@@ -258,7 +272,7 @@ Plugins I'm using: `git z sublime history rbenv bundler rake`
 
 Oh-My-Zsh uses Z shell（zsh）, which is quite close to Bash, but it's not Bash.
 
-In Z shell, `~/.zshrc` is the most important configure file. Oh-My-Zsh will set the current path into `~/.zshrc` as `$PATH` during installation. As I'm using brew, this is not something that I want to have. With brew, we are not encouraged to customize `$PAHT`, and by default Oh-My-Zsh already set `$PAHT` with quite good value:`$HOME/bin:/usr/local/bin:$PATH`, in which contains the `$HOME/bin`, it means we can put our self defined script under `$HOME/bin`.
+In Z shell, `~/.zshrc` is the most important configure file. Oh-My-Zsh will set the current path into `~/.zshrc` as `$PATH` during installation. As I'm using brew, this is not something that I want to have. With brew, we are not encouraged to customize `$PAHT`, and by default Oh-My-Zsh already set `$PAHT` with quite good value:`$HOME/bin:/usr/local/bin:$PATH`, in which contains the `$HOME/bin`, it means we can put customized scripts in `$HOME/bin`.
 
 so I recommend you to reset the `~/.zshrc`:
 
@@ -266,22 +280,11 @@ so I recommend you to reset the `~/.zshrc`:
 cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
 ```
 
+> [Since a commit on Jun 17 2016](https://github.com/robbyrussell/oh-my-zsh/commit/551abfcbb48a0c001eadef80abc3276af4e9ad26), the `zshrc.zsh-template` didn't change `$PATH` any more. Find `# export PATH=$HOME/bin:/usr/local/bin:$PATH` and remove the `#` to make our life better。
+
 Oh-My-Zsh gets [more valuable plugins](https://github.com/robbyrussell/oh-my-zsh/wiki/Plugins-Overview).
 
-Besides Oh-My-Zsh, there is [Oh My Fish](https://github.com/oh-my-fish/oh-my-fish)，which take [Fishshell](http://fishshell.com/) as foundation.
-
-### [Stow](http://www.gnu.org/software/stow/)
-GNU stow is the super girl(-.-) of symlink management. Mainly it's used to symlink your [dotfiles](http://dotfiles.github.io/), like emacs，git configuration files of fish/zsh.
-
-Installation:
-
-```
-brew install stow
-```
-
-After installing, we can symlink the dotfiles. The full instructions for stow and dotfiles are here:<https://github.com/jcouyang/dotfiles>.
-
-After symlinking all your dotfiles to `~/dotfiles`, push it to github. There is no worries any more for setuping another new laptop.
+Besides Oh-My-Zsh, there is [Oh My Fish](https://github.com/oh-my-fish/oh-my-fish)，which based on [Fishshell](http://fishshell.com/).
 
 ### Git Alias
 
@@ -309,16 +312,13 @@ gst   | `git status`
 gup   | `git pull --rebase`
 gwip  | `git add -A; git rm $(git ls-files --deleted) 2> /dev/null; git commit -m "--wip--"`
 
-
 The full list is here: <https://github.com/robbyrussell/oh-my-zsh/wiki/Plugin:git>, or simply run command `alias | grep git` in Oh-My-Zsh window.
-
 
 *Some lines are missing here. As not helping a lot - fff*
 
-
 ### ShiftIt
 
-In OS X you only can adjust window size by dragging. I've tried lots of window management tools, but most of them have the conflict key mapping(mostly with IntelliJ IDEA). ShiftIt is the apparently rare one without any conflicts.
+In macOS you only can adjust window size by dragging. I've tried lots of window management tools, but most of them have the conflict key mapping(mostly with IntelliJ IDEA). ShiftIt is the apparently rare one without any conflicts.
 
 Installation:
 
@@ -340,7 +340,7 @@ Installation:
 brew cask install sublime-text
 ```
 
-Open file with Sublime Text in command line is quite handy, normally we need to link it first(following:[OS X Command Line](https://www.sublimetext.com/docs/2/osx_command_line.html)) with: `ln -s "/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl" ~/bin/subl`. 
+Open file with Sublime Text in command line is quite handy, normally we need to link it first(following:[OS X Command Line](https://www.sublimetext.com/docs/2/osx_command_line.html)) with: `ln -s "/Applications/Sublime Text 2.app/Contents/SharedSupport/bin/subl" ~/bin/subl`.
 
 But if you install it with brew-cask, the problem is already sorted by brew-cask, and it will remove the link when you uninstall Sublime Text.
 
@@ -380,7 +380,7 @@ For firefox there is a similar solution: [KeySnail](https://github.com/mooz/keys
 
 ### [LastPass](https://lastpass.com)
 
-LastPass is a password management tool, support a second login step, provides plugins for every browser and also OS X desktop version.
+LastPass is a password management tool, support a second login step, provides plugins for every browser and also macOS desktop version.
 
 The most important thing, it provides **command line** version, install it by:
 
@@ -436,13 +436,28 @@ Installation:
 brew cask install alfred
 ```
 
+### [Stow](http://www.gnu.org/software/stow/)
+
+GNU stow is the super girl(-.-) of symlink management. Mainly it's used to symlink your [dotfiles](http://dotfiles.github.io/), like Emacs，Git configuration files of fish shell/Zsh.
+
+Installation:
+
+```
+brew install stow
+```
+
+After installing, we can symlink the dotfiles. The full instructions for stow and dotfiles are here:<https://github.com/jcouyang/dotfiles>.
+
+After symlinking all your dotfiles to `~/dotfiles`, push it to github. There is no worries any more for setuping another new laptop.
+
 ## 3. Tools for developers
 
 ### Java
 
-There is no default JDK any more for new version of OS X, so you need to download and install it before you want to do some Java projects.
+There is no default JDK any more for new version of macOS, so you need to download and install it before you want to do some Java projects.
 
 Before brew-cask, we are used to download from: <https://developer.apple.com/downloads/>. But the drawback is that uninstall or upgrades take significant time.
+
 For JDK package, which is pkg format, there is no automatic way to uninstall it.
 
 But good news is brew-cask can do it for you:
@@ -451,16 +466,16 @@ But good news is brew-cask can do it for you:
 brew cask install java
 ```
 
-If you need Java-7 or Java-6, you can get from `homebrew-cask-versions`：
+If you need Java-11 or Java-6, you can get from [homebrew-cask-versions](https://github.com/Homebrew/homebrew-cask-versions)：
 
 ```sh
-brew tap caskroom/versions
-brew cask install java6
+brew tap homebrew/cask-versions
+brew cask install java11
 ```
 
-You can install several versions of JDK in Mac OS X, `/usr/libexec/java_home -V` will list all of them.
+You can install several versions of JDK in macOS, `/usr/libexec/java_home -V` will list all of them.
 
-So here is the problem, Which one is the one used by running `java` or any Java application? normally, OS X invokes the newest version of all those installed JDK versions. But you can change it by set `JAVA_HOME`:
+So here is the problem, Which one is the one used by running `java` or any Java application? normally, macOS invokes the newest version of all those installed JDK versions. But you can change it by set `JAVA_HOME`:
 
 ```sh
 $ java -version
@@ -474,6 +489,9 @@ Java HotSpot(TM) 64-Bit Server VM (build 20.65-b04-466.1, mixed mode)
 ```
 
 You may change `JAVA_HOME=/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home` into `` JAVA_HOME=`/usr/libexec/java_home -v 1.6` ``, which is more widely used.
+
+
+Need to install JDK 8/9? Due to [Java8 not working anymore](https://github.com/Homebrew/homebrew-cask-versions/issues/7253), brew-cask does not privde those Oracle JDK any more. You can try [AdoptOpenJDK](https://github.com/AdoptOpenJDK/homebrew-openjdk) or download pkg from [Oracle](https://www.oracle.com).
 
 *Some lines are missing here. As not helping a lot - fff*
 
@@ -499,7 +517,7 @@ Alternatives: RVM, chruby. But as RVM is unable to be installed by brew, and it 
 
 ### Ruby Daily Alias
 
-Almost every Rubyist takes `bi` as alias of `bundle install`. Oh-My-Zsh provides `builder` plugin to setup a set of alias, like `bi`, `be`. Also allow you to run `rspec` directly, without any leading `be` or `bundle exec`. 
+Almost every Rubyist takes `bi` as alias of `bundle install`. Oh-My-Zsh provides `builder` plugin to setup a set of alias, like `bi`, `be`. Also allow you to run `rspec` directly, without any leading `be` or `bundle exec`.
 
 For a detailed list please go to <https://github.com/robbyrussell/oh-my-zsh/tree/master/plugins/bundler>.
 
@@ -510,9 +528,39 @@ Be aware of that, put `rake` after `bundler` when modifying the plugin settings 
 plugins=(git z sublime history rbenv bundler rake)
 ```
 
+### Node Version Manager
+
+There are many node version management tools. In here, I recommend nodenv, which is quite light and can be installed by brew.
+
+* [nodenv](https://github.com/nodenv/nodenv)
+
+  This tool is the same as rbenv, you can install it like this:
+
+  ```
+  brew install nodenv
+  ```
+
+  Then you need to add the following code into `~/zshrc` or `~/.zprofile`.
+
+  ```sh
+  export PATH="$HOME/.nodenv/bin:$PATH"
+  eval "$(nodenv init -)"
+  ```
+
+Other tools:
+
+* [nvm](https://github.com/creationix/nvm)
+
+  This tool is the same as RVM, you can reference official doc to install it.
+
+* [n](https://github.com/tj/n)
+
+  Another simple tool, please reference official doc.
+
 ## References
 
 - [Hacker's Guide to Setting up Your Mac](http://lapwinglabs.com/blog/hacker-guide-to-setting-up-your-mac)
 - [Setting up a new (OS X) development machine](https://mattstauffer.co/blog/setting-up-a-new-os-x-development-machine-part-1-core-files-and-custom-shell)
-- [高效 MacBook 工作环境配置](http://www.xialeizhou.com/?p=71) **"Efficient MacBook working configurration", you need google translate*
+- [高效 MacBook 工作环境配置](http://www.xialeizhou.com/?p=71) **"Efficient MacBook working configurration", you need google translate* (no longer available)
 - [程序员如何优雅地使用 Mac？](http://www.zhihu.com/question/20873070) **"How to use Mac elegantly for programmer", you need google translate also*
+- [装点你的 Dock：外观篇](http://sspai.com/33493)
